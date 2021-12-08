@@ -1,6 +1,9 @@
 package com.cooksys.ftd.assignments.control;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 /**
  * FizzBuzz is an old programming exercise.
@@ -26,7 +29,10 @@ public class FizzBuzz {
      * @throws IllegalArgumentException if b is zero
      */
     public static boolean divides(int a, int b) throws IllegalArgumentException {
-        throw new NotImplementedException();
+        if (b == 0) { // if b is 0...
+            throw new IllegalArgumentException(); // ... return exception
+        }
+        return (a % b == 0); // else, if 'a' is evenly divisible by 'b' return 'true' or 'false'
     }
 
     /**
@@ -41,7 +47,18 @@ public class FizzBuzz {
      * @return a message according to the format above, or null if n is not divisible by either 3 or 5
      */
     public static String message(int n) {
-        throw new NotImplementedException();
+        if (divides(n, 15)) { // if 'n' is evenly divisible by 15...
+            return n + ": FizzBuzz"; // ... return "n: FizzBuzz"
+        }
+
+        if (divides(n, 5)) { // if 'n' is evenly divisible by 5...
+            return n + ": Buzz"; // ... return "n: Buzz"
+        }
+
+        if (divides(n, 3)) { // if 'n' is evenly divisible by 15...
+            return n + ": Fizz"; // ... return "n: Fizz"
+        }
+        return null; // else, return null
     }
 
     /**
@@ -50,12 +67,24 @@ public class FizzBuzz {
      * it should be excluded from the resulting array.
      *
      * @param start the number to start with (inclusive)
-     * @param end the number to end with (exclusive)
+     * @param end   the number to end with (exclusive)
      * @return an array of divisibility messages
      * @throws IllegalArgumentException if the given end is less than the given start
      */
     public static String[] messages(int start, int end) throws IllegalArgumentException {
-        throw new NotImplementedException();
+        int[] numbersArray = IntStream.range(start, end).toArray(); // create an array of numbers using the given parameters
+
+        if (end < start) { // if end parameter is less than the start parameter...
+            throw new IllegalArgumentException(); // ...throw exception
+        }
+
+        ArrayList<String> resultArray = new ArrayList<>();
+        for (int number : numbersArray) { // for each number in the array...
+            if (message(number) != null) { // if message() method does not return 'null'...
+                resultArray.add(message(number));
+            }
+        }
+        return resultArray.toArray(new String[0]);
     }
 
     /**
@@ -63,7 +92,10 @@ public class FizzBuzz {
      * the relevant messages to sysout
      */
     public static void main(String[] args) {
-        throw new NotImplementedException();
+//        throw new NotImplementedException();
+        int[] numbersArray = IntStream.rangeClosed(1, 115).toArray(); // create an array from '1' to '115'
+        for (int number : numbersArray) { // for each number in the array...
+            System.out.println(number); // ... print the number
+        }
     }
-
 }
