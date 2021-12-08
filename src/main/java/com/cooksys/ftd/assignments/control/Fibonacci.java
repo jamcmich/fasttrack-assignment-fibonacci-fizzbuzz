@@ -25,7 +25,27 @@ public class Fibonacci {
      */
     public static int atIndex(int i) throws IllegalArgumentException {
 //        throw new NotImplementedException();
-        return 0;
+        if (i < 0) { // if 'i' is less than 0...
+            throw new IllegalArgumentException(); // ...throw exception
+        }
+
+        if (i == 0) { // if 'i' is equal to 0...
+            return 1; // ...return 1
+        }
+
+        int[] newArray = new int[i + 1]; // since arrays start at 0
+        newArray[0] = 1; // base case
+        newArray[1] = 1; // base case
+
+        for (int j = 2; j < newArray.length; j++) {
+            newArray[j] = newArray[j - 1] + newArray[j - 2];
+        }
+
+        /*
+            ex: int[] fibArray = [1, 1, 2, 3, 5...],
+            if 'i' = 4, valueAtIndex = (i - 1) + (i - 2) = 3 + 2 = 5
+        */
+        return newArray[i];
     }
 
     /**
