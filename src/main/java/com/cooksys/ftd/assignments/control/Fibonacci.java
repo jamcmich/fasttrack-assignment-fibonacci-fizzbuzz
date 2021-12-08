@@ -2,6 +2,11 @@ package com.cooksys.ftd.assignments.control;
 
 //import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+
 /**
  * The Fibonacci sequence is simply and recursively defined: the first two elements are `1`, and
  * every other element is equal to the sum of its two preceding elements. For example:
@@ -25,27 +30,34 @@ public class Fibonacci {
      */
     public static int atIndex(int i) throws IllegalArgumentException {
 //        throw new NotImplementedException();
+
         if (i < 0) { // if 'i' is less than 0...
             throw new IllegalArgumentException(); // ...throw exception
         }
 
-        if (i == 0) { // if 'i' is equal to 0...
-            return 1; // ...return 1
+        if (i == 0 || i == 1) { // if 'i' is equal to 0 or 1...
+            return 1; // ...return 1, ex: [1, 1, 2, 3...]
         }
 
-        int[] newArray = new int[i + 1]; // since arrays start at 0
-        newArray[0] = 1; // base case
-        newArray[1] = 1; // base case
+        int[] fibArray = new int[i + 2]; // define the size of the array
+        fibArray[0] = 1; // pre-populate first element
+        fibArray[1] = 1; // pre-populate second element
 
-        for (int j = 2; j < newArray.length; j++) {
-            newArray[j] = newArray[j - 1] + newArray[j - 2];
+        for (int j = 2; j < fibArray.length; j++) { // start at the third index (j = 2)
+            fibArray[j] = fibArray[j - 1] + fibArray[j - 2]; // assign the value at index 'j'
         }
 
         /*
-            ex: int[] fibArray = [1, 1, 2, 3, 5...],
-            if 'i' = 4, valueAtIndex = (i - 1) + (i - 2) = 3 + 2 = 5
+            ex: int[] fibArray = [1, 1, 2, ...],
+                if 'i' = 2, valueAtIndex = (i - 1) + (i - 2) = 1 + 1 = 2,
+                store 2 atIndex(2) in array...
+                ...
+                if 'i' = 4, valueAtIndex = (i - 1) + (i - 2) = 3 + 2 = 5,
+                store 5 atIndex(4) in array...
+                if 'i' = 5, valueAtIndex = (i - 1) + (i - 2) = 5 + 3 = 8
+                store 8 atIndex(5) in array...
         */
-        return newArray[i];
+        return fibArray[i]; // return the result at a given index
     }
 
     /**
@@ -60,7 +72,20 @@ public class Fibonacci {
      */
     public static int[] slice(int start, int end) throws IllegalArgumentException {
 //        throw new NotImplementedException();
-        return null;
+        if (start < 0 || end < 0 || end < start) {
+            throw new IllegalArgumentException();
+        }
+
+        int[] newArray = new int[end - start];
+        int[] range = IntStream.range(start, end).toArray();
+        int indexStart = start;
+
+        for (int i = 0; i < range.length; i++) {
+            newArray[i] = atIndex(indexStart);
+            indexStart++;
+        }
+
+        return newArray;
     }
 
     /**
@@ -72,6 +97,11 @@ public class Fibonacci {
      */
     public static int[] fibonacci(int count) throws IllegalArgumentException {
 //        throw new NotImplementedException();
-        return null;
+
+        if (count < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        return slice(0, count);
     }
 }
